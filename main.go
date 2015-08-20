@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"github.com/everfore/exc"
-	"os"
 )
 
 var (
@@ -20,13 +19,15 @@ func init() {
 func main() {
 	flag.Parse()
 	first := "git add -A"
+	var git *exc.CMD
 	if quit {
-		first = "git status"
+		exc.NewCMD("git push origin master").Debug().Execute()
+		return
 	}
-	git := exc.NewCMD(first).Wd()
+	git = exc.NewCMD(first).Wd()
 	_, err := git.Debug().Do()
 	if checkerr(err) {
-		os.Exit(-1)
+		return
 	}
 	if len(commit) > 0 {
 		commit = fmt.Sprintf(`git commit -m "%s"`, commit)
@@ -35,7 +36,7 @@ func main() {
 	}
 	_, err = git.Reset(commit).Do()
 	if checkerr(err) {
-		os.Exit(-1)
+		return
 	}
 	git.Reset("git push origin master").Execute()
 }
