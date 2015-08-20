@@ -12,14 +12,14 @@ func checkerr(err error) bool {
 	return false
 }
 func main() {
-	git := exc.NewCMD("git add -A")
+	git := exc.NewCMD("git add -A").Wd()
 	_, err := git.Debug().Do()
 	if checkerr(err) {
 		os.Exit(-1)
 	}
-	_, err = git.Reset(`git commit -m "auto"`).Wd().Do()
+	_, err = git.Reset(`git commit -m "auto"`).Do()
 	if checkerr(err) {
-		// os.Exit(-1)
+		os.Exit(-1)
 	}
 	git.Reset("git push origin master").Execute()
 }
