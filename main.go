@@ -19,7 +19,6 @@ func init() {
 
 func main() {
 	flag.Parse()
-	fmt.Println(quit)
 	first := "git add -A"
 	if quit {
 		first = "git status"
@@ -29,7 +28,6 @@ func main() {
 	if checkerr(err) {
 		os.Exit(-1)
 	}
-	fmt.Println(commit)
 	if len(commit) > 0 {
 		commit = fmt.Sprintf(`git commit -m "%s"`, commit)
 	} else {
@@ -39,8 +37,6 @@ func main() {
 	if checkerr(err) {
 		os.Exit(-1)
 	}
-	git.Reset("git status").Execute()
-	return
 	git.Reset("git push origin master").Execute()
 }
 
