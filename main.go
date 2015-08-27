@@ -32,7 +32,7 @@ func main() {
 	if len(commit) > 0 {
 		commit = fmt.Sprintf(`git commit -m %s`, commit)
 	} else {
-		commit = `git commit -m "auto"`
+		commit = `git commit -m auto`
 	}
 	_, err = git.Reset(commit).Do()
 	if checkerr(err) {
