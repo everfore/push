@@ -30,7 +30,7 @@ func main() {
 		return
 	}
 	if len(commit) > 0 {
-		commit = fmt.Sprintf(`git commit -m "%s"`, commit)
+		commit = fmt.Sprintf(`git commit -m %s`, commit)
 	} else {
 		commit = `git commit -m "auto"`
 	}
