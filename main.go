@@ -43,6 +43,7 @@ func main() {
 	// git.Reset("git push origin master").Execute()
 	if len(tag) > 0 {
 		fmt.Println(tag)
+
 	}
 }
 
