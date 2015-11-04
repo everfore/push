@@ -41,7 +41,7 @@ func main() {
 	if checkerr(err) {
 		goto TAG
 	}
-	// git.Reset("git push origin master").Execute()
+	git.Reset("git push origin master").Execute()
 TAG:
 	fmt.Println(tag)
 	if "no_tag" != tag {
