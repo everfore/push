@@ -43,7 +43,6 @@ func main() {
 	}
 	git.Reset("git push origin master").Execute()
 TAG:
-	fmt.Println(tag)
 	if "no_tag" != tag {
 		_, err = git.Reset(fmt.Sprintf("git tag -a %s -m %s", tag, tag)).Do()
 		if checkerr(err) {
