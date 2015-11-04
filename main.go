@@ -24,12 +24,12 @@ func main() {
 	var git *exc.CMD
 	if quit {
 		exc.NewCMD("git push origin master").Debug().Execute()
-		return
+		goto TAG
 	}
 	git = exc.NewCMD(first).Wd()
 	_, err := git.Debug().Do()
 	if checkerr(err) {
-		return
+		goto TAG
 	}
 	if len(commit) > 0 {
 		commit = fmt.Sprintf(`git commit -m %s`, commit)
@@ -38,9 +38,10 @@ func main() {
 	}
 	_, err = git.Reset(commit).Do()
 	if checkerr(err) {
-		return
+		goto TAG
 	}
 	// git.Reset("git push origin master").Execute()
+TAG:
 	if "no_tag" == tag {
 		fmt.Println(tag)
 
