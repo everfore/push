@@ -9,10 +9,12 @@ import (
 var (
 	quit   = false
 	commit = ""
+	tag    = ""
 )
 
 func init() {
 	flag.BoolVar(&quit, "q", false, "-q: quit add all")
+	flag.StringVar(&tag, "t", "latest", "-t: tag")
 	flag.StringVar(&commit, "m", "", "-m: commit content")
 }
 
@@ -38,7 +40,10 @@ func main() {
 	if checkerr(err) {
 		return
 	}
-	git.Reset("git push origin master").Execute()
+	// git.Reset("git push origin master").Execute()
+	if len(tag) > 0 {
+		fmt.Println(tag)
+	}
 }
 
 func checkerr(err error) bool {
