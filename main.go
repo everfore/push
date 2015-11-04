@@ -14,7 +14,7 @@ var (
 
 func init() {
 	flag.BoolVar(&quit, "q", false, "-q: quit add all")
-	flag.StringVar(&tag, "t", "latest", "-t: tag")
+	flag.StringVar(&tag, "t", "no_tag", "-t: tag")
 	flag.StringVar(&commit, "m", "", "-m: commit content")
 }
 
@@ -41,7 +41,7 @@ func main() {
 		return
 	}
 	// git.Reset("git push origin master").Execute()
-	if len(tag) > 0 {
+	if "no_tag" == tag {
 		fmt.Println(tag)
 
 	}
