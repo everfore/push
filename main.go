@@ -50,6 +50,9 @@ TAG:
 		}
 		git.Reset(fmt.Sprintf("git push origin master --tag %s:%s", tag, tag)).Execute()
 	}
+	if rerr := recover(); rerr != nil {
+		fmt.Print(rerr)
+	}
 }
 
 func checkerr(err error) bool {
