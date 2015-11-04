@@ -22,12 +22,13 @@ func main() {
 	flag.Parse()
 	first := "git add -A"
 	var git *exc.CMD
+	var err error
 	if quit {
 		exc.NewCMD("git push origin master").Debug().Execute()
 		goto TAG
 	}
 	git = exc.NewCMD(first).Wd()
-	_, err := git.Debug().Do()
+	_, err = git.Debug().Do()
 	if checkerr(err) {
 		goto TAG
 	}
@@ -43,7 +44,7 @@ func main() {
 	// git.Reset("git push origin master").Execute()
 TAG:
 	if "no_tag" == tag {
-		git.Reset(fmt.Sprintf("git push origin master --tag %s:%s"), tag, tag).Execute()
+		git.Reset(fmt.Sprintf("git push origin master --tag %s:%s", tag, tag)).Execute()
 	}
 }
 
