@@ -10,12 +10,14 @@ var (
 	quit   = false
 	commit = ""
 	tag    = ""
+	rtag   = true
 )
 
 func init() {
 	flag.BoolVar(&quit, "q", false, "-q: quit add all")
-	flag.StringVar(&tag, "t", "no_tag", "-t: tag")
 	flag.StringVar(&commit, "m", "", "-m: commit content")
+	flag.StringVar(&tag, "t", "no_tag", "-t: tag")
+	flag.BoolVar(&rtag, "r", true, "-r: remove the tag after 50 seconds")
 }
 
 func main() {
@@ -49,6 +51,10 @@ TAG:
 			return
 		}
 		git.Reset(fmt.Sprintf("git push origin master --tag %s:%s", tag, tag)).Execute()
+		if !rtag {
+			return
+		}
+		fmt.Printf("%d seconds later...\n", 50)
 		git.Reset(fmt.Sprintf("git tag -d %s", tag)).ExecuteAfter(50)
 		git.Reset(fmt.Sprintf("git push origin --tag :%s", tag)).Execute()
 	}
