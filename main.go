@@ -49,6 +49,8 @@ TAG:
 			return
 		}
 		git.Reset(fmt.Sprintf("git push origin master --tag %s:%s", tag, tag)).Execute()
+		git.Reset(fmt.Sprintf("git tag -d %s", tag)).ExecuteAfter(50)
+		git.Reset(fmt.Sprintf("git push origin --tag :%s", tag)).Execute()
 	}
 	if rerr := recover(); rerr != nil {
 		fmt.Print(rerr)
