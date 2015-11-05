@@ -54,6 +54,7 @@ TAG:
 		if !rtag {
 			return
 		}
+		fmt.Println(rtag)
 		fmt.Printf("%d seconds later...\n", 50)
 		git.Reset(fmt.Sprintf("git tag -d %s", tag)).ExecuteAfter(5)
 		git.Reset(fmt.Sprintf("git push origin --tag :%s", tag)).Execute()
