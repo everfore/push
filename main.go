@@ -41,7 +41,7 @@ func main() {
 	} else {
 		commit = `git commit -m auto`
 	}
-	_, err = git.Reset(commit).Do()
+	_, _ = git.Reset(commit).Do()
 	// if checkerr(err) {
 	// 	goto TAG
 	// }
