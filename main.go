@@ -42,9 +42,9 @@ func main() {
 		commit = `git commit -m auto`
 	}
 	_, err = git.Reset(commit).Do()
-	if checkerr(err) {
-		goto TAG
-	}
+	// if checkerr(err) {
+	// 	goto TAG
+	// }
 	if rerr := recover(); rerr != nil {
 		fmt.Print("RECOVER:\t", rerr)
 	}
