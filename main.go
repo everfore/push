@@ -41,12 +41,12 @@ func main() {
 	} else {
 		commit = `git commit -m auto`
 	}
-	if rerr := recover(); rerr != nil {
-		fmt.Print("RECOVER:\t", rerr)
-	}
 	_, err = git.Reset(commit).Do()
 	if checkerr(err) {
 		goto TAG
+	}
+	if rerr := recover(); rerr != nil {
+		fmt.Print("RECOVER:\t", rerr)
 	}
 	git.Reset(fmt.Sprintf("git push %s master", remote)).Execute()
 TAG:
