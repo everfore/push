@@ -41,6 +41,9 @@ func main() {
 	} else {
 		commit = `git commit -m auto`
 	}
+	if rerr := recover(); rerr != nil {
+		fmt.Print("RECOVER:\t", rerr)
+	}
 	_, err = git.Reset(commit).Do()
 	if checkerr(err) {
 		goto TAG
@@ -59,9 +62,6 @@ TAG:
 		fmt.Printf("%d seconds later...\n", 50)
 		git.Reset(fmt.Sprintf("git tag -d %s", tag)).ExecuteAfter(50)
 		git.Reset(fmt.Sprintf("git push %s --tag :%s", remote, tag)).Execute()
-	}
-	if rerr := recover(); rerr != nil {
-		fmt.Print(rerr)
 	}
 }
 
