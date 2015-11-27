@@ -7,17 +7,19 @@ import (
 )
 
 var (
-	quit   = false
-	commit = ""
-	tag    = ""
-	rtag   = true
+	quit    = false
+	commit  = ""
+	remote  = ""
+	tag     = ""
+	dlt_tag = true
 )
 
 func init() {
 	flag.BoolVar(&quit, "q", false, "-q: quit add all")
 	flag.StringVar(&commit, "m", "", "-m: commit content")
+	flag.StringVar(&remote, "r", "origin", "-r origin")
 	flag.StringVar(&tag, "t", "no_tag", "-t: tag")
-	flag.BoolVar(&rtag, "r", true, "-r: remove the tag after 50 seconds")
+	flag.BoolVar(&dlt_tag, "d", true, "-d: delete the tag after 50 seconds")
 }
 
 func main() {
@@ -26,7 +28,7 @@ func main() {
 	var git *exc.CMD
 	var err error
 	if quit {
-		exc.NewCMD("git push origin master").Debug().Execute()
+		exc.NewCMD(fmt.Sprintf("git push %s master", remote)).Debug().Execute()
 		goto TAG
 	}
 	git = exc.NewCMD(first).Wd()
@@ -43,20 +45,20 @@ func main() {
 	if checkerr(err) {
 		goto TAG
 	}
-	git.Reset("git push origin master").Execute()
+	git.Reset(fmt.Sprintf("git push %s master", remote)).Execute()
 TAG:
 	if "no_tag" != tag {
 		_, err = git.Reset(fmt.Sprintf("git tag -a %s -m %s", tag, tag)).Do()
 		if checkerr(err) {
 			return
 		}
-		git.Reset(fmt.Sprintf("git push origin master --tag %s:%s", tag, tag)).Execute()
-		if !rtag {
+		git.Reset(fmt.Sprintf("git push %s master --tag %s:%s", remote, tag, tag)).Execute()
+		if !dlt_tag {
 			return
 		}
 		fmt.Printf("%d seconds later...\n", 50)
 		git.Reset(fmt.Sprintf("git tag -d %s", tag)).ExecuteAfter(50)
-		git.Reset(fmt.Sprintf("git push origin --tag :%s", tag)).Execute()
+		git.Reset(fmt.Sprintf("git push %s --tag :%s", remote, tag)).Execute()
 	}
 	if rerr := recover(); rerr != nil {
 		fmt.Print(rerr)
