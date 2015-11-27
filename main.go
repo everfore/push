@@ -32,23 +32,15 @@ func main() {
 		goto TAG
 	}
 	git = exc.NewCMD(first).Wd()
-	_, err = git.Debug().Do()
-	if checkerr(err) {
-		goto TAG
-	}
+	_, _ = git.Debug().Do()
 	if len(commit) > 0 {
 		commit = fmt.Sprintf(`git commit -m %s`, commit)
 	} else {
 		commit = `git commit -m auto`
 	}
 	_, _ = git.Reset(commit).Do()
-	// if checkerr(err) {
-	// 	goto TAG
-	// }
-	if rerr := recover(); rerr != nil {
-		fmt.Print("RECOVER:\t", rerr)
-	}
 	git.Reset(fmt.Sprintf("git push %s master", remote)).Execute()
+
 TAG:
 	if "no_tag" != tag {
 		_, err = git.Reset(fmt.Sprintf("git tag -a %s -m %s", tag, tag)).Do()
