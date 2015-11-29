@@ -28,7 +28,8 @@ func main() {
 	var git *exc.CMD
 	var err error
 	if quit {
-		exc.NewCMD(fmt.Sprintf("git push %s master", remote)).Debug().Execute()
+		git = exc.NewCMD(fmt.Sprintf("git push %s master", remote)).Debug()
+		git.Execute()
 		goto TAG
 	}
 	git = exc.NewCMD(first).Wd()
