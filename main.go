@@ -18,7 +18,7 @@ func init() {
 	flag.BoolVar(&quit, "q", false, "-q: quit add all")
 	flag.StringVar(&commit, "m", "", "-m: commit content")
 	flag.StringVar(&remote, "r", "origin", "-r origin")
-	flag.StringVar(&tag, "t", "no_tag", "-t: tag")
+	flag.StringVar(&tag, "t", "", "-t: tag")
 	flag.BoolVar(&dlt_tag, "d", true, "-d: delete the tag after 50 seconds")
 }
 
@@ -47,7 +47,7 @@ func main() {
 	git.Reset(fmt.Sprintf("git push %s master", remote)).Execute()
 
 TAG:
-	if "no_tag" != tag {
+	if len(tag) > 0 {
 		_, err = git.Reset(fmt.Sprintf("git tag -a %s -m %s", tag, tag)).DoNoTime()
 		if checkerr(err) {
 			return
