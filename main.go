@@ -48,7 +48,7 @@ func main() {
 
 TAG:
 	if "no_tag" != tag {
-		_, err = git.Reset(fmt.Sprintf("git tag -a %s", tag)).DoNoTime()
+		_, err = git.Reset(fmt.Sprintf("git tag -a %s -m", tag, tag)).DoNoTime()
 		if checkerr(err) {
 			return
 		}
