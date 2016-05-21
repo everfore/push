@@ -33,7 +33,7 @@ func main() {
 		goto TAG
 	}
 	git = exc.NewCMD(first).Wd()
-	_, _ = git.Debug().DoNoTime()
+	_ = git.Debug().Execute()
 	if len(commit) > 0 {
 		commit = fmt.Sprintf(`git commit -m %s`, commit)
 	} else {
@@ -43,7 +43,7 @@ func main() {
 			commit = `git commit -m auto`
 		}
 	}
-	_, _ = git.Reset(commit).DoNoTime()
+	_ = git.Reset(commit).Execute()
 	git.Reset(fmt.Sprintf("git push %s master", remote)).Execute()
 
 TAG:
