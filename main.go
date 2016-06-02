@@ -40,7 +40,7 @@ func main() {
 		if len(tag) > 0 {
 			commit = fmt.Sprintf("git commit -m %s", tag)
 		} else {
-			commit = `git commit -m auto [skip ci]`
+			commit = `git commit -m auto`
 		}
 	}
 	_ = git.Reset(commit).Execute()
