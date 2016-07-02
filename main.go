@@ -39,13 +39,13 @@ func main() {
 		git.Execute()
 		goto TAG
 	}
-	git = exc.NewCMD(first).Wd()
-	_ = git.Debug().Execute()
 	if len(only_commit) > 0 {
 		only_commit = fmt.Sprintf(`git commit -m %s`, only_commit)
 		_ = git.Reset(commit).Execute()
 		return
 	}
+	git = exc.NewCMD(first).Wd()
+	_ = git.Debug().Execute()
 	if len(commit) > 0 {
 		commit = fmt.Sprintf(`git commit -m %s`, commit)
 	} else {
