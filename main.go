@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+
 	"github.com/everfore/exc"
 )
 
@@ -15,11 +16,11 @@ var (
 )
 
 func init() {
-	flag.BoolVar(&quit, "q", false, "-q: quit add all")
-	flag.StringVar(&commit, "m", "", "-m: commit content")
-	flag.StringVar(&remote, "r", "origin", "-r origin")
-	flag.StringVar(&tag, "t", "", "-t: tag")
-	flag.BoolVar(&dlt_tag, "d", true, "-d: delete the tag after 50 seconds")
+	flag.BoolVar(&quit, "q", false, "-q: quit add all, just push the committed code \n[git push]")
+	flag.StringVar(&commit, "m", "", "-m: commit content, \n[git add -A;git commit $commit]")
+	flag.StringVar(&remote, "r", "origin", "-r origin \n[git push $origin]")
+	flag.StringVar(&tag, "t", "", "-t: tag \n[git tag -a $tag -m $tag;git push $origin --tags $tag:$tag]")
+	flag.BoolVar(&dlt_tag, "d", true, "-d: delete the tag after 50 seconds \n[git tag -D $tag;git push $origin --tags :$tag]")
 }
 
 func main() {
@@ -52,12 +53,12 @@ TAG:
 		if checkerr(err) {
 			return
 		}
-		git.Reset(fmt.Sprintf("git push %s master --tag %s:%s", remote, tag, tag)).Execute()
+		//		git.Reset(fmt.Sprintf("git push %s master --tag %s:%s", remote, tag, tag)).Execute()
 		if !dlt_tag {
 			return
 		}
 		fmt.Printf("%d seconds later...\n", 50)
-		git.Reset(fmt.Sprintf("git tag -d %s", tag)).ExecuteAfter(50)
+		git.Reset(fmt.Sprintf("git tag -d %s", tag)).ExecuteAfter(5)
 		git.Reset(fmt.Sprintf("git push %s --tag :%s", remote, tag)).Execute()
 	}
 }
