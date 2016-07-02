@@ -10,16 +10,18 @@ import (
 var (
 	quit          = false
 	commit        = ""
+	only_commit   = ""
 	remote        = ""
 	branch        = ""
 	remote_branch = ""
 	tag           = ""
-	dlt_tag       = false // no delete the tag
+	dlt_tag       = false // delete the tag after 25 sec
 )
 
 func init() {
 	flag.BoolVar(&quit, "q", false, "-q: quit add all, just push the committed code \n\tgit push")
-	flag.StringVar(&commit, "m", "", "-m: commit content, \n\tgit add -A;git commit $commit")
+	flag.StringVar(&only_commit, "-m", "", "--m: commit content, \n\tgit add -A;git commit $commit")
+	flag.StringVar(&commit, "m", "", "-m: commit content, \n\tgit add -A;git commit $commit;git push")
 	flag.StringVar(&remote, "r", "origin", "-r origin \n\tgit push $origin")
 	flag.StringVar(&branch, "b", "master", "-b master \n\tgit push $origin $branch:$remote_branch")
 	flag.StringVar(&remote_branch, "rb", "master", "-rb master \n\tgit push $origin $branch:$remote_branch")
@@ -39,6 +41,11 @@ func main() {
 	}
 	git = exc.NewCMD(first).Wd()
 	_ = git.Debug().Execute()
+	if len(only_commit) > 0 {
+		only_commit = fmt.Sprintf(`git commit -m %s`, only_commit)
+		_ = git.Reset(commit).Execute()
+		return
+	}
 	if len(commit) > 0 {
 		commit = fmt.Sprintf(`git commit -m %s`, commit)
 	} else {
@@ -63,8 +70,8 @@ TAG:
 			return
 		}
 
-		fmt.Printf("%d seconds later...\n", 50)
-		git.Reset(fmt.Sprintf("git tag -d %s", tag)).ExecuteAfter(15)
+		fmt.Printf("%d seconds later...\n", 25)
+		git.Reset(fmt.Sprintf("git tag -d %s", tag)).ExecuteAfter(25)
 		git.Reset(fmt.Sprintf("git push %s --tag :%s", remote, tag)).Execute()
 	}
 }
