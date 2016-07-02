@@ -57,7 +57,7 @@ TAG:
 		if checkerr(err) {
 			return
 		}
-		//		git.Reset(fmt.Sprintf("git push %s --tag %s:%s", remote, tag, tag)).Execute()
+		git.Reset(fmt.Sprintf("git push %s --tag %s:%s", remote, tag, tag)).Execute()
 		if no_dlt_tag {
 			return
 		}
