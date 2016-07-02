@@ -14,7 +14,7 @@ var (
 	branch        = ""
 	remote_branch = ""
 	tag           = ""
-	no_dlt_tag    = false // no delete the tag
+	dlt_tag       = false // no delete the tag
 )
 
 func init() {
@@ -24,7 +24,7 @@ func init() {
 	flag.StringVar(&branch, "b", "master", "-b master \n\tgit push $origin $branch:$remote_branch")
 	flag.StringVar(&remote_branch, "rb", "master", "-rb master \n\tgit push $origin $branch:$remote_branch")
 	flag.StringVar(&tag, "t", "", "-t: tag \n\tgit tag -a $tag -m $tag;git push $origin --tags $tag:$tag")
-	flag.BoolVar(&no_dlt_tag, "d", false, "-d: delete the tag after 50 seconds \n\tgit tag -d $tag;git push $origin --tags :$tag")
+	flag.BoolVar(&dlt_tag, "d", false, "-d: delete the tag after 50 seconds \n\tgit tag -d $tag;git push $origin --tags :$tag")
 }
 
 func main() {
@@ -58,8 +58,8 @@ TAG:
 			return
 		}
 		git.Reset(fmt.Sprintf("git push %s --tag %s:%s", remote, tag, tag)).Execute()
-		fmt.Println("no_del_tag:", no_dlt_tag)
-		if no_dlt_tag {
+		fmt.Println("del_tag:", dlt_tag)
+		if !dlt_tag {
 			return
 		}
 
