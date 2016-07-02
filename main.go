@@ -58,9 +58,11 @@ TAG:
 			return
 		}
 		git.Reset(fmt.Sprintf("git push %s --tag %s:%s", remote, tag, tag)).Execute()
+		fmt.Println("no_del_tag:", no_dlt_tag)
 		if no_dlt_tag {
 			return
 		}
+
 		fmt.Printf("%d seconds later...\n", 50)
 		git.Reset(fmt.Sprintf("git tag -d %s", tag)).ExecuteAfter(15)
 		git.Reset(fmt.Sprintf("git push %s --tag :%s", remote, tag)).Execute()
