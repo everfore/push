@@ -62,7 +62,7 @@ TAG:
 			return
 		}
 		fmt.Printf("%d seconds later...\n", 50)
-		git.Reset(fmt.Sprintf("git tag -d %s", tag)).ExecuteAfter(5)
+		git.Reset(fmt.Sprintf("git tag -d %s", tag)).ExecuteAfter(15)
 		git.Reset(fmt.Sprintf("git push %s --tag :%s", remote, tag)).Execute()
 	}
 }
