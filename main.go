@@ -40,6 +40,7 @@ func main() {
 		goto TAG
 	}
 	if len(only_commit) > 0 {
+		fmt.Println("only_commit", only_commit)
 		only_commit = fmt.Sprintf(`git commit -m %s`, only_commit)
 		_ = git.Reset(commit).Execute()
 		return
