@@ -8,19 +8,19 @@ import (
 )
 
 var (
-	quit    = false
-	commit  = ""
-	remote  = ""
-	tag     = ""
-	dlt_tag = true
+	quit       = false
+	commit     = ""
+	remote     = ""
+	tag        = ""
+	no_dlt_tag = false // no delete the tag
 )
 
 func init() {
-	flag.BoolVar(&quit, "q", false, "-q: quit add all, just push the committed code \n[git push]")
-	flag.StringVar(&commit, "m", "", "-m: commit content, \n[git add -A;git commit $commit]")
-	flag.StringVar(&remote, "r", "origin", "-r origin \n[git push $origin]")
-	flag.StringVar(&tag, "t", "", "-t: tag \n[git tag -a $tag -m $tag;git push $origin --tags $tag:$tag]")
-	flag.BoolVar(&dlt_tag, "d", true, "-d: delete the tag after 50 seconds \n[git tag -D $tag;git push $origin --tags :$tag]")
+	flag.BoolVar(&quit, "q", false, "-q: quit add all, just push the committed code \n\tgit push")
+	flag.StringVar(&commit, "m", "", "-m: commit content, \n\tgit add -A;git commit $commit")
+	flag.StringVar(&remote, "r", "origin", "-r origin \n\tgit push $origin")
+	flag.StringVar(&tag, "t", "", "-t: tag \n\tgit tag -a $tag -m $tag;git push $origin --tags $tag:$tag")
+	flag.BoolVar(&no_dlt_tag, "d", false, "-d: delete the tag after 50 seconds \n\tgit tag -d $tag;git push $origin --tags :$tag")
 }
 
 func main() {
@@ -54,7 +54,7 @@ TAG:
 			return
 		}
 		//		git.Reset(fmt.Sprintf("git push %s master --tag %s:%s", remote, tag, tag)).Execute()
-		if !dlt_tag {
+		if no_dlt_tag {
 			return
 		}
 		fmt.Printf("%d seconds later...\n", 50)
