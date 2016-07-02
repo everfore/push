@@ -32,6 +32,7 @@ func init() {
 func main() {
 	flag.Parse()
 	first := "git add -A"
+	fmt.Println("only_commit", only_commit, len(only_commit))
 	var git *exc.CMD
 	var err error
 	if quit {
@@ -39,7 +40,7 @@ func main() {
 		git.Execute()
 		goto TAG
 	}
-	fmt.Println("only_commit", only_commit, len(only_commit))
+
 	if len(only_commit) > 0 {
 		fmt.Println("only_commit", only_commit)
 		only_commit = fmt.Sprintf(`git commit -m %s`, only_commit)
