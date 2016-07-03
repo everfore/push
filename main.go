@@ -20,7 +20,7 @@ var (
 
 func init() {
 	flag.BoolVar(&quit, "q", false, "-q: quit add all, just push the committed code \n\tgit push")
-	flag.StringVar(&only_commit, "om", "", "-om: commit content, \n\tgit commit $commit")
+	flag.StringVar(&only_commit, "--m", "", "-om: commit content, \n\tgit commit $commit")
 	flag.StringVar(&commit, "m", "", "-m: commit content, \n\tgit add -A;git commit $commit;git push")
 	flag.StringVar(&remote, "r", "origin", "-r origin \n\tgit push $origin")
 	flag.StringVar(&branch, "b", "master", "-b master \n\tgit push $origin $branch:$remote_branch")
@@ -32,7 +32,6 @@ func init() {
 func main() {
 	flag.Parse()
 	first := "git add -A"
-	fmt.Println("only_commit", only_commit, len(only_commit))
 	var git *exc.CMD
 	var err error
 	if quit {
