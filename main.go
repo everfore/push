@@ -8,15 +8,15 @@ import (
 )
 
 var (
-	quit          = false
-	commit        = ""
-	only_commit   = ""
-	remote        = ""
-	branch        = ""
-	remote_branch = ""
-	tag           = ""
-	status        = false
-	dlt_tag       = false // delete the tag after 25 sec
+	quit           = false
+	commit         = ""
+	only_commit    = ""
+	remote         = ""
+	branch         = ""
+	remote_branch  = ""
+	tag            = ""
+	status         = false
+	ignore_dlt_tag = false // delete the tag after 25 sec
 )
 
 func init() {
@@ -28,7 +28,7 @@ func init() {
 	flag.StringVar(&branch, "b", "master", "-b $branch \n\tgit push $origin $branch:$remote_branch")
 	flag.StringVar(&remote_branch, "rb", "master", "-rb $remote_branch \n\tgit push $origin $branch:$remote_branch")
 	flag.StringVar(&tag, "t", "", "-t $tag \n\tgit tag -a $tag -m $tag;git push $origin --tags $tag:$tag")
-	flag.BoolVar(&dlt_tag, "d", false, "-d: delete the tag after 50 seconds \n\tgit tag -d $tag;git push $origin --tags :$tag")
+	flag.BoolVar(&ignore_dlt_tag, "d", true, "-d: delete the tag after 50 seconds \n\tgit tag -d $tag;git push $origin --tags :$tag")
 }
 
 func main() {
@@ -71,8 +71,8 @@ TAG:
 			return
 		}
 		git.Reset(fmt.Sprintf("git push %s --tag %s:%s", remote, tag, tag)).Execute()
-		fmt.Println("del_tag:", dlt_tag)
-		if dlt_tag {
+		fmt.Println("del_tag:", ignore_dlt_tag)
+		if ignore_dlt_tag {
 			return
 		}
 
