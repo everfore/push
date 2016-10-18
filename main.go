@@ -28,7 +28,7 @@ func init() {
 	flag.StringVar(&branch, "b", "master", "-b $branch \n\tgit push $origin $branch:$remote_branch")
 	flag.StringVar(&remote_branch, "rb", "master", "-rb $remote_branch \n\tgit push $origin $branch:$remote_branch")
 	flag.StringVar(&tag, "t", "", "-t $tag \n\tgit tag -a $tag -m $tag;git push $origin --tags $tag:$tag")
-	flag.BoolVar(&dlt_tag, "d", false, "-d: delete the tag after 50 seconds \n\tgit tag -d $tag;git push $origin --tags :$tag")
+	flag.BoolVar(&dlt_tag, "d", true, "-d: delete the tag after 50 seconds \n\tgit tag -d $tag;git push $origin --tags :$tag")
 }
 
 func main() {
