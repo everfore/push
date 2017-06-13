@@ -25,8 +25,8 @@ func init() {
 	flag.BoolVar(&status, "s", false, "git status")
 	flag.StringVar(&commit, "m", "", "-m $commit, commit and push \n\tgit add -A;git commit $commit;git push")
 	flag.StringVar(&remote, "r", "origin", "-r $remote \n\tgit push $origin")
-	flag.StringVar(&branch, "b", "feature/favorite", "-b $branch \n\tgit push $origin $branch:$remote_branch")
-	flag.StringVar(&remote_branch, "rb", "feature/favorite", "-rb $remote_branch \n\tgit push $origin $branch:$remote_branch")
+	flag.StringVar(&branch, "b", "master", "-b $branch \n\tgit push $origin $branch:$remote_branch")
+	flag.StringVar(&remote_branch, "rb", "refactoring", "-rb $remote_branch \n\tgit push $origin $branch:$remote_branch")
 	flag.StringVar(&tag, "t", "", "-t $tag \n\tgit tag -a $tag -m $tag;git push $origin --tags $tag:$tag")
 	flag.BoolVar(&ignore_dlt_tag, "d", false, "-d: delete the tag after 50 seconds \n\tgit tag -d $tag;git push $origin --tags :$tag")
 }
@@ -58,7 +58,7 @@ func main() {
 		if len(tag) > 0 {
 			commit = fmt.Sprintf("git commit -m %s", tag)
 		} else {
-			commit = `git commit -m 收藏夹重构`
+			commit = `git commit -m 重构收藏夹`
 		}
 	}
 	_ = git.Reset(commit).Execute()
