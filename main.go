@@ -33,7 +33,7 @@ func init() {
 
 func main() {
 	flag.Parse()
-	first := "git add -A"
+	first := "git add ."
 	var git *exc.CMD
 	git = exc.NewCMD(first).Wd().Debug()
 	var err error
