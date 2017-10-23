@@ -97,7 +97,7 @@ func currentBranch() string {
 		panic(err)
 	}
 	cb := string(bs)
-	fmt.Printf("current branch:%s\n", cb)
+	fmt.Printf("* %s\n", cb)
 	return cb
 }
 
