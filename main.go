@@ -92,11 +92,13 @@ TAG:
 }
 
 func currentBranch() string {
-	bs, err := exc.NewCMD("git rev-parse --abbrev-ref HEAD").Debug().DoNoTime()
+	bs, err := exc.NewCMD("git rev-parse --abbrev-ref HEAD").DoNoTime()
 	if err != nil {
 		panic(err)
 	}
-	return string(bs)
+	cb := string(bs)
+	fmt.Printf("current branch:%s\n", cb)
+	return cb
 }
 
 func checkerr(err error) bool {
