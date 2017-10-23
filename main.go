@@ -67,7 +67,7 @@ func main() {
 		if len(tag) > 0 {
 			commit = fmt.Sprintf("git commit -m %s", tag)
 		} else {
-			commit = `git commit -m 重构收藏夹`
+			commit = `git commit -m `
 		}
 	}
 	_ = git.Reset(commit).Execute()
