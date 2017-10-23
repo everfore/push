@@ -43,10 +43,13 @@ func main() {
 		git.Reset("git status").Execute()
 		return
 	}
+	branch = currentBranch()
+	remote_branch = branch
 	if featured {
 		branch = fmt.Sprintf("feature/%s", branch)
 		remote_branch = fmt.Sprintf("feature/%s", remote_branch)
 	}
+
 	if quit {
 		git.Reset(fmt.Sprintf("git push %s %s:%s", remote, branch, remote_branch)).Execute()
 		goto TAG
@@ -86,6 +89,14 @@ TAG:
 		git.Reset(fmt.Sprintf("git tag -d %s", tag)).ExecuteAfter(25)
 		git.Reset(fmt.Sprintf("git push %s --tag :%s", remote, tag)).Execute()
 	}
+}
+
+func currentBranch() string {
+	bs, err := exc.NewCMD("git rev-parse --abbrev-ref HEAD").Debug().DoNoTime()
+	if err != nil {
+		panic(err)
+	}
+	return string(bs)
 }
 
 func checkerr(err error) bool {
