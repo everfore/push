@@ -27,8 +27,8 @@ func init() {
 	flag.BoolVar(&status, "s", false, "git status")
 	flag.StringVar(&commit, "m", "", "-m $commit, commit and push \n\tgit add -A;git commit $commit;git push")
 	flag.StringVar(&remote, "r", "origin", "-r $remote \n\tgit push $origin")
-	flag.StringVar(&branch, "b", "develop", "-b $branch \n\tgit push $origin $branch:$remote_branch")
-	flag.StringVar(&remote_branch, "rb", "develop", "-rb $remote_branch \n\tgit push $origin $branch:$remote_branch")
+	flag.StringVar(&branch, "b", "", "-b $branch \n\tgit push $origin $branch:$remote_branch")
+	flag.StringVar(&remote_branch, "rb", "", "-rb $remote_branch \n\tgit push $origin $branch:$remote_branch")
 	flag.StringVar(&tag, "t", "", "-t $tag \n\tgit tag -a $tag -m $tag;git push $origin --tags $tag:$tag")
 	flag.BoolVar(&ignore_dlt_tag, "d", false, "-d: delete the tag after 50 seconds \n\tgit tag -d $tag;git push $origin --tags :$tag")
 }
@@ -43,8 +43,13 @@ func main() {
 		git.Reset("git status").Execute()
 		return
 	}
-	branch = currentBranch()
-	remote_branch = branch
+	cb := currentBranch()
+	remote_branch = cb
+	if branch == "nil" {
+		branch = ""
+	} else {
+		branch = cb
+	}
 	if featured {
 		branch = fmt.Sprintf("feature/%s", branch)
 		remote_branch = fmt.Sprintf("feature/%s", remote_branch)
@@ -67,7 +72,7 @@ func main() {
 		if len(tag) > 0 {
 			commit = fmt.Sprintf("git commit -m %s", tag)
 		} else {
-			commit = "git commit -m same_as_the_last_commit"
+			commit = `git commit -m same+as+the+last+commit`
 		}
 	}
 	_ = git.Reset(commit).Execute()
