@@ -9,6 +9,7 @@ import (
 
 var (
 	quit           = false
+	force          = false
 	featured       = false
 	commit         = ""
 	only_commit    = ""
@@ -23,6 +24,7 @@ var (
 func init() {
 	flag.BoolVar(&quit, "q", false, "-q: quit add all, just push the committed code \n\tgit push")
 	flag.BoolVar(&featured, "f", false, "-f: push feature/branch")
+	flag.BoolVar(&force, "F", false, "-f: push --force")
 	flag.StringVar(&only_commit, "om", "", "-om $commit,only commit no push \n\tgit commit $commit")
 	flag.BoolVar(&status, "s", false, "git status")
 	flag.StringVar(&commit, "m", "", "-m $commit, commit and push \n\tgit add -A;git commit $commit;git push")
@@ -55,8 +57,14 @@ func main() {
 		remote_branch = fmt.Sprintf("feature/%s", remote_branch)
 	}
 
+	gitCmd := ""
 	if quit {
-		git.Reset(fmt.Sprintf("git push %s %s:%s", remote, branch, remote_branch)).Execute()
+		if force {
+			gitCmd = fmt.Sprintf("git push -f %s %s:%s", remote, branch, remote_branch)
+		} else {
+			gitCmd = gitCmd
+		}
+		git.Reset(gitCmd).Execute()
 		goto TAG
 	}
 	if len(only_commit) > 0 {
@@ -76,7 +84,12 @@ func main() {
 		}
 	}
 	_ = git.Reset(commit).Execute()
-	git.Reset(fmt.Sprintf("git push %s %s:%s", remote, branch, remote_branch)).Execute()
+	if force {
+		gitCmd = fmt.Sprintf("git push -f %s %s:%s", remote, branch, remote_branch)
+	} else {
+		gitCmd = fmt.Sprintf("git push %s %s:%s", remote, branch, remote_branch)
+	}
+	git.Reset(gitCmd).Execute()
 
 TAG:
 	if len(tag) > 0 {
