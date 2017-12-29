@@ -2,11 +2,13 @@ package command
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/everfore/exc"
 	// cr "github.com/fatih/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/toukii/goutils"
 )
 
 var Command = &cobra.Command{
@@ -107,8 +109,17 @@ func (r *Repo) ExcuteGit() error {
 	return nil
 }
 
-func (r *Repo) Status() {
-	r.git.Reset(r.status()).Execute()
+func (r *Repo) Status() bool {
+	bs, err := exc.NewCMD(r.status()).Do()
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	if strings.Contains(goutils.ToString(bs), "nothing to commit, working tree clean") {
+		return false
+	}
+	fmt.Printf("%s\n", bs)
+	return true
 }
 
 func (r *Repo) status() string {
@@ -116,14 +127,16 @@ func (r *Repo) status() string {
 }
 
 func (r *Repo) Commit() {
-	r.Status()
+	cstatus := r.Status()
 	if viper.GetBool("quit") {
 		return
 	}
 
-	r.git.Reset("git add -A").Execute()
-	r.git.Reset(r.commit()).Execute()
-	r.Status()
+	if cstatus {
+		r.git.Reset("git add -A").Execute()
+		r.git.Reset(r.commit()).Execute()
+		r.Status()
+	}
 }
 
 func (r *Repo) commit() string {
