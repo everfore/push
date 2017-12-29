@@ -56,7 +56,7 @@ func main() {
 		if force {
 			gitCmd = fmt.Sprintf("git push -f %s %s:%s", remote, branch, remote_branch)
 		} else {
-			gitCmd = gitCmd
+			gitCmd = fmt.Sprintf("git push %s %s:%s", remote, branch, remote_branch)
 		}
 		git.Reset(gitCmd).Execute()
 		goto TAG
