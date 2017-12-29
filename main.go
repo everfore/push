@@ -10,7 +10,6 @@ import (
 var (
 	quit           = false
 	force          = false
-	featured       = false
 	commit         = ""
 	only_commit    = ""
 	remote         = ""
@@ -23,8 +22,7 @@ var (
 
 func init() {
 	flag.BoolVar(&quit, "q", false, "-q: quit add all, just push the committed code \n\tgit push")
-	flag.BoolVar(&featured, "f", false, "-f: push feature/branch")
-	flag.BoolVar(&force, "F", false, "-f: push --force")
+	flag.BoolVar(&force, "f", false, "-f: push --force")
 	flag.StringVar(&only_commit, "om", "", "-om $commit,only commit no push \n\tgit commit $commit")
 	flag.BoolVar(&status, "s", false, "git status")
 	flag.StringVar(&commit, "m", "", "-m $commit, commit and push \n\tgit add -A;git commit $commit;git push")
@@ -52,10 +50,6 @@ func main() {
 	} else {
 		branch = cb
 	}
-	// if featured {
-	// 	branch = fmt.Sprintf("feature/%s", branch)
-	// 	remote_branch = fmt.Sprintf("feature/%s", remote_branch)
-	// }
 
 	gitCmd := ""
 	if quit {
