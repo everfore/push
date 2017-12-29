@@ -52,10 +52,10 @@ func main() {
 	} else {
 		branch = cb
 	}
-	if featured {
-		branch = fmt.Sprintf("feature/%s", branch)
-		remote_branch = fmt.Sprintf("feature/%s", remote_branch)
-	}
+	// if featured {
+	// 	branch = fmt.Sprintf("feature/%s", branch)
+	// 	remote_branch = fmt.Sprintf("feature/%s", remote_branch)
+	// }
 
 	gitCmd := ""
 	if quit {
