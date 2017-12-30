@@ -16,7 +16,6 @@ var Command = &cobra.Command{
 	Short: "git push",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(args)
 		size := len(args)
 		if size > 0 {
 			viper.Set("commit", args[0])
