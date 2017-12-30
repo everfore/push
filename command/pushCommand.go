@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/everfore/exc"
-	// cr "github.com/fatih/color"
+	cr "github.com/fatih/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/toukii/goutils"
@@ -16,6 +16,7 @@ var Command = &cobra.Command{
 	Short: "git push",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println(args)
 		size := len(args)
 		if size > 0 {
 			viper.Set("commit", args[0])
@@ -71,7 +72,7 @@ func LocalBranch() string {
 		panic(err)
 	}
 	cb := string(bs[:len(bs)-1])
-	fmt.Printf("* %s\n", cb)
+	fmt.Printf("git on %s\n", cr.GreenString("* %s", cb))
 	return cb
 }
 
