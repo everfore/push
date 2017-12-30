@@ -121,7 +121,6 @@ func (r *Repo) Status() bool {
 		return false
 	}
 	// fmt.Printf("%s\n", bs)
-
 	return true
 }
 
