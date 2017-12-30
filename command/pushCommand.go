@@ -101,6 +101,8 @@ func (r *Repo) Init() {
 	} else {
 		r.Remote = "origin"
 	}
+
+	r.Tag = viper.GetString("tag")
 }
 
 func (r *Repo) ExcuteGit() error {
@@ -156,4 +158,11 @@ func (r *Repo) push() string {
 		force = "-f "
 	}
 	return fmt.Sprintf("git push %s%s %s:%s", force, r.Remote, r.Branch, r.RemoteBranch)
+}
+
+func (r *Repo) tag() (bool, string) {
+	if r.Tag == "" {
+		return false, ""
+	}
+	return true, fmt.Sprintf("git push %s --tags %s:%s", r.Remote, r.Tag, r.Tag)
 }
