@@ -120,7 +120,7 @@ func (r *Repo) Status() bool {
 	if strings.Contains(goutils.ToString(bs), "nothing to commit, working tree clean") {
 		return false
 	}
-	// fmt.Printf("%s\n", bs)
+	fmt.Printf("%s\n", bs)
 	return true
 }
 
@@ -134,11 +134,12 @@ func (r *Repo) Commit() {
 		return
 	}
 
-	if cstatus {
+	if !viper.GetBool("only_commit") && cstatus {
 		r.git.Reset("git add -A").Execute()
-		r.git.Reset(r.commit()).Execute()
-		r.Status()
 	}
+
+	r.git.Reset(r.commit()).Execute()
+	r.Status()
 }
 
 func (r *Repo) commit() string {
