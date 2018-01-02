@@ -120,7 +120,7 @@ func (r *Repo) Status() bool {
 	if strings.Contains(goutils.ToString(bs), "nothing to commit, working tree clean") {
 		return false
 	}
-	fmt.Printf("%s\n", bs)
+	// fmt.Printf("%s\n", bs)
 	return true
 }
 
