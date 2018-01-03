@@ -20,7 +20,7 @@ var Command = &cobra.Command{
 		if size > 0 {
 			viper.Set("commit", args[0])
 		} else {
-			viper.Set("commit", "the same as the last")
+			viper.Set("commit", "the+same+as+the+last")
 		}
 		Excute()
 	},
@@ -83,7 +83,11 @@ func (r *Repo) Init() {
 
 	vb := viper.GetString("branch")
 	if vb != "" {
-		r.Branch = vb
+		if vb == "nil" {
+			r.Branch = ""
+		} else {
+			r.Branch = vb
+		}
 	} else {
 		r.Branch = branch
 	}
