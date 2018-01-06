@@ -138,7 +138,11 @@ func (r *Repo) Commit() {
 		return
 	}
 
-	if !viper.GetBool("only_commit") && cstatus {
+	if !cstatus {
+		return
+	}
+
+	if !viper.GetBool("only_commit") {
 		r.git.Reset("git add -A").Execute()
 	}
 
