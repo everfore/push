@@ -35,7 +35,7 @@ type Repo struct {
 	git          *exc.CMD
 }
 
-func init() {
+func init() { //
 	Command.PersistentFlags().BoolP("quit", "q", false, "quit add all, just push the committed code \n\tgit push")
 	Command.PersistentFlags().BoolP("force", "F", false, "-f: push --force")
 	Command.PersistentFlags().BoolP("only_commit", "o", false, "-o only commit")
@@ -142,6 +142,7 @@ func (r *Repo) Commit() {
 		return
 	}
 
+	//
 	if !viper.GetBool("only_commit") {
 		r.git.Reset("git add -A").Execute()
 	}
