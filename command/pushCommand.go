@@ -35,11 +35,11 @@ type Repo struct {
 	git          *exc.CMD
 }
 
-func init() { //
+func init() {
 	Command.PersistentFlags().BoolP("quit", "q", false, "quit add all, just push the committed code \n\tgit push")
 	Command.PersistentFlags().BoolP("force", "F", false, "-f: push --force")
 	Command.PersistentFlags().BoolP("only_commit", "o", false, "-o only commit")
-	Command.PersistentFlags().StringP("commit", "m", "", "-m $commit, commit and push \n\tgit add -A;git commit $commit;git push")
+	// Command.PersistentFlags().StringP("commit", "m", "", "-m $commit, commit and push \n\tgit add -A;git commit $commit;git push")
 	Command.PersistentFlags().StringP("remote", "R", "origin", "-r $remote \n\tgit push $origin")
 	Command.PersistentFlags().StringP("branch", "b", "", "-b $branch \n\tgit push $origin $branch:$remote_branch")
 	Command.PersistentFlags().StringP("remote_branch", "r", "", "-rb $remote_branch \n\tgit push $origin $branch:$remote_branch")
@@ -50,7 +50,7 @@ func init() { //
 	viper.BindPFlag("force", Command.PersistentFlags().Lookup("force"))
 	viper.BindPFlag("force", Command.PersistentFlags().Lookup("force"))
 	viper.BindPFlag("only_commit", Command.PersistentFlags().Lookup("only_commit"))
-	viper.BindPFlag("commit", Command.PersistentFlags().Lookup("commit"))
+	// viper.BindPFlag("commit", Command.PersistentFlags().Lookup("commit"))
 	viper.BindPFlag("remote", Command.PersistentFlags().Lookup("remote"))
 	viper.BindPFlag("branch", Command.PersistentFlags().Lookup("branch"))
 	viper.BindPFlag("remote_branch", Command.PersistentFlags().Lookup("remote_branch"))
