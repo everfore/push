@@ -147,7 +147,7 @@ func (r *Repo) Commit() {
 	add := viper.GetString("add")
 	fmt.Println("add:", add)
 	if add != "" {
-		r.git.Reset("git add " + add).Debug().Execute()
+		r.git.Reset("git add " + add).Execute()
 	} else {
 		if !viper.GetBool("only_commit") {
 			r.git.Reset("git add -A").Execute()
