@@ -78,7 +78,7 @@ func LocalBranch() string {
 }
 
 func (r *Repo) Init() {
-	r.git = exc.NewCMD("").Debug()
+	r.git = exc.NewCMD("").Debug(true)
 
 	r.Commition = viper.GetString("commit")
 	branch := LocalBranch()
