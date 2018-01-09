@@ -36,6 +36,7 @@ type Repo struct {
 }
 
 func init() {
+	Command.PersistentFlags().StringP("add", "a", "", "git add && commit")
 	Command.PersistentFlags().BoolP("quit", "q", false, "quit add all, just push the committed code \n\tgit push")
 	Command.PersistentFlags().BoolP("force", "F", false, "-f: push --force")
 	Command.PersistentFlags().BoolP("only_commit", "o", false, "-o only commit")
@@ -46,6 +47,7 @@ func init() {
 	Command.PersistentFlags().StringP("tag", "t", "", "-t $tag \n\tgit tag -a $tag -m $tag;git push $origin --tags $tag:$tag")
 	Command.PersistentFlags().BoolP("ignore_dlt_tag", "d", false, "-d: delete the tag after 50 seconds \n\tgit tag -d $tag;git push $origin --tags :$tag")
 
+	viper.BindPFlag("add", Command.PersistentFlags().Lookup("add"))
 	viper.BindPFlag("quit", Command.PersistentFlags().Lookup("quit"))
 	viper.BindPFlag("force", Command.PersistentFlags().Lookup("force"))
 	viper.BindPFlag("force", Command.PersistentFlags().Lookup("force"))
@@ -142,9 +144,14 @@ func (r *Repo) Commit() {
 		return
 	}
 
-	//
-	if !viper.GetBool("only_commit") {
-		r.git.Reset("git add -A").Execute()
+	add := viper.GetString("add")
+	fmt.Println("add:", add)
+	if add != "" {
+		r.git.Reset("git add " + add).Debug().Execute()
+	} else {
+		if !viper.GetBool("only_commit") {
+			r.git.Reset("git add -A").Execute()
+		}
 	}
 
 	r.git.Reset(r.commit()).Execute()
