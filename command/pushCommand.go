@@ -59,6 +59,7 @@ func init() {
 }
 
 func Excute() error {
+	exc.NewCMD("e icat /Users/toukii/toukii/images/github.png").Exec(true)
 	var repo Repo
 	repo.Init()
 
@@ -68,7 +69,8 @@ func Excute() error {
 func LocalBranch() string {
 	bs, err := exc.NewCMD("git rev-parse --abbrev-ref HEAD").DoNoTime()
 	if err != nil {
-		panic(err)
+		fmt.Printf("no-HEAD on %s\n", cr.GreenString("* master"))
+		return "master"
 	}
 	cb := string(bs[:len(bs)-1])
 	fmt.Printf("git on %s\n", cr.GreenString("* %s", cb))
