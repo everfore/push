@@ -59,7 +59,7 @@ func init() {
 }
 
 func Excute() error {
-	exc.NewCMD("e icat /Users/toukii/toukii/images/github.png").Exec(true)
+	exc.NewCMD("e icat /Users/toukii/toukii/images/github.svg").Exec(true)
 	var repo Repo
 	repo.Init()
 
