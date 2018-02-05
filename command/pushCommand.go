@@ -3,12 +3,14 @@ package command
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/everfore/exc"
 	cr "github.com/fatih/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/toukii/goutils"
+	"github.com/toukii/icat"
 )
 
 var Command = &cobra.Command{
@@ -59,7 +61,8 @@ func init() {
 }
 
 func Excute() error {
-	exc.NewCMD("e icat /Users/toukii/toukii/images/github.svg").Exec(true)
+	// exc.NewCMD("e icat /Users/toukii/toukii/images/github.svg").Exec(true)
+	icat.GitHubSVGThree(time.Now().Unix())
 	var repo Repo
 	repo.Init()
 
