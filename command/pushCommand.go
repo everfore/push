@@ -159,6 +159,10 @@ func (r *Repo) Commit() {
 
 	r.git.Reset(r.commit()).Execute()
 	r.Status()
+
+	if pushtag, cmd := r.tag(); pushtag {
+		r.git.Reset(cmd).Execute()
+	}
 }
 
 func (r *Repo) commit() string {
@@ -182,6 +186,10 @@ func (r *Repo) push() string {
 
 func (r *Repo) tag() (bool, string) {
 	if r.Tag == "" {
+		return false, ""
+	}
+	_, err := r.git.Reset(fmt.Sprintf("git tag -a %s -m %s", r.Tag, r.Tag)).DoNoTime()
+	if err != nil {
 		return false, ""
 	}
 	return true, fmt.Sprintf("git push %s --tags %s:%s", r.Remote, r.Tag, r.Tag)
