@@ -159,10 +159,6 @@ func (r *Repo) Commit() {
 
 	r.git.Reset(r.commit()).Execute()
 	r.Status()
-
-	if pushtag, cmd := r.tag(); pushtag {
-		r.git.Reset(cmd).Execute()
-	}
 }
 
 func (r *Repo) commit() string {
@@ -174,6 +170,13 @@ func (r *Repo) Push() {
 		return
 	}
 	r.git.Reset(r.push()).Execute()
+
+	fmt.Println("push...")
+	if pushtag, cmd := r.tag(); pushtag {
+		r.git.Reset(cmd).Execute()
+	} else {
+		fmt.Println(pushtag, cmd)
+	}
 }
 
 func (r *Repo) push() string {
