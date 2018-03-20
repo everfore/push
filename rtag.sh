@@ -8,7 +8,7 @@ tell application "System Events"
     tell process "iTerm2"
         set frontmost to false
 	end tell
-	tell process "Chrome"
+	tell process "chrome"
         set frontmost to false
 	end tell
 end tell	
