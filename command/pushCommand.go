@@ -119,7 +119,7 @@ func (r *Repo) Init() {
 func (r *Repo) ExcuteGit() error {
 	r.Commit()
 	if squash := viper.GetInt("squash"); squash >= 2 {
-		bs1, err := r.git.Reset(fmt.Sprintf("git rebase -i HEAD~%d", squash)).Do()
+		bs1, err := exc.Bash(fmt.Sprintf("git rebase -i HEAD~%d", squash)).Do()
 		fmt.Printf("%s", bs1)
 		return err
 
