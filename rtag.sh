@@ -1,23 +1,19 @@
 #!/bin/sh
 
-git add .
-git commit -m "auto"
-echo "======="
+function psh(){
+name=$1
+$(git add .)
+$(git commit -m $name)
 osascript <<EOF
 tell application "System Events"
-	tell process "Safari"
+    tell process "iTerm2"
         set frontmost to true
+        keystroke "git rebase -i HEAD~2"
+        keystroke return
+        keystroke DownArrow
+        keystroke "daw"
 	end tell
-	tell process "Chrome"
-        set frontmost to true
-        keystroke "t" using {command down}
-        keystroke "baidu.com"
-        key down return
-	end tell
- #    tell process "iTerm2"
- #        set frontmost to true
-	# end tell
-end tell	
+end tell
 EOF
-# osascript xxx
-echo "======="
+return $?
+}
