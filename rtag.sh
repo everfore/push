@@ -8,6 +8,9 @@ tell application "System Events"
     tell process "iTerm2"
         set frontmost to false
 	end tell
+	tell process "com.google.Chrome"
+        set frontmost to false
+	end tell
 end tell	
 EOF
 # osascript xxx
