@@ -1,7 +1,10 @@
 #!/bin/sh
 
-for tag in `git tag`;do
-echo $tag
-git tag -d $tag
-git push origin --tag :$tag
-done
+git add .
+git commit -m "auto"
+
+osascript <<EOF
+tell application "iTerm"
+exec command "git status"
+end tell
+EOF
