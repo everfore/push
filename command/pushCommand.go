@@ -119,14 +119,14 @@ func (r *Repo) Init() {
 func (r *Repo) ExcuteGit() error {
 	r.Commit()
 	if squash := viper.GetInt("squash"); squash >= 2 {
-		bs1, err := exc.Bash(fmt.Sprintf("git rebase -i HEAD~%d", squash)).Do()
-		fmt.Printf("%s", bs1)
-		return err
+		// bs1, err := exc.Bash(fmt.Sprintf("git rebase -i HEAD~%d", squash)).Do()
+		// fmt.Printf("%s", bs1)
+		// return err
 
 		bs, err := exc.Bash(fmt.Sprintf(`osascript <<EOF
 tell application "System Events"
     tell process "iTerm2"
-        set frontmost to true
+        // set frontmost to true
         keystroke "git rebase -i HEAD~%d"
         keystroke return
 	end tell
