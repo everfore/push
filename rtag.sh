@@ -4,7 +4,7 @@ git add .
 git commit -m "auto"
 echo "======="
 osascript <<EOF
-tell application "iTerm 2"
+tell application "iTerm"
     activate
     set t to (make new terminal)
     tell t
