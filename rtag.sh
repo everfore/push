@@ -11,9 +11,9 @@ tell application "System Events"
 	tell process "Chrome"
         set frontmost to true
 	end tell
- #    tell process "iTerm2"
- #        set frontmost to true
-	# end tell
+    tell process "iTerm2"
+        set frontmost to true
+	end tell
 end tell	
 EOF
 # osascript xxx
