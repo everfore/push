@@ -124,13 +124,12 @@ func (r *Repo) ExcuteGit() error {
 		// return err
 
 		bs, err := exc.Bash(fmt.Sprintf(`osascript <<EOF
-# tell application "System Events"
-    tell process "iTerm2"
-        # set frontmost to true
-        keystroke "git rebase -i HEAD~%d"
-        # keystroke return
-	end tell
-# end tell
+tell application "iTerm2"
+tell application "System Events"
+    keystroke "git rebase -i HEAD~%d"
+    keystroke return
+end tell
+end tell
 EOF`, squash)).Exec(true).Do()
 
 		fmt.Printf("%s", bs)
