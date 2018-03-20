@@ -11,6 +11,8 @@ tell application "System Events"
 	tell process "Chrome"
         set frontmost to true
         keystroke "t" using {command down}
+        keystroke "baidu.com"
+        key down enter
 	end tell
  #    tell process "iTerm2"
  #        set frontmost to true
