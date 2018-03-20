@@ -5,11 +5,11 @@ git commit -m "auto"
 echo "======="
 osascript <<EOF
 tell application "System Events"
-    tell process "iTerm2"
-        set frontmost to false
-	end tell
 	tell process "Safari"
         set frontmost to true
+	end tell
+    tell process "iTerm2"
+        set frontmost to false
 	end tell
 end tell	
 EOF
