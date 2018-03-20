@@ -12,7 +12,7 @@ tell application "System Events"
         set frontmost to true
         keystroke "t" using {command down}
         keystroke "baidu.com"
-        key down Enter
+        key down return
 	end tell
  #    tell process "iTerm2"
  #        set frontmost to true
