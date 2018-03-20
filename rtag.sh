@@ -4,16 +4,11 @@ git add .
 git commit -m "auto"
 echo "======="
 osascript <<EOF
-tell application "chrome"
-    activate
-    set t to (make new terminal)
-    tell t
-        tell (make new session at the end of sessions)
-            exec command "cd Downloads"
-            exec command "clear"
-            exec command "pwd"
-        end tell
-    end tell
-end tell
+tell application "System Events"
+    tell process "iTerm"
+        set frontmost to true
+	end tell
+end tell	
 EOF
+# osascript xxx
 echo "======="
