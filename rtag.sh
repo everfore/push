@@ -10,8 +10,6 @@ tell application "System Events"
         set frontmost to true
         keystroke "git rebase -i HEAD~2"
         keystroke return
-        key code 125
-        keystroke "daw"
 	end tell
 end tell
 EOF
