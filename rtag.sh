@@ -9,7 +9,7 @@ tell application "System Events"
         set frontmost to false
 	end tell
 	tell process "Safari"
-        set frontmost to false
+        set frontmost to true
 	end tell
 end tell	
 EOF
