@@ -38,6 +38,7 @@ type Repo struct {
 }
 
 func init() {
+	Command.PersistentFlags().IntP("squash", "s", 0, "git squash")
 	Command.PersistentFlags().StringP("add", "a", "", "git add && commit")
 	Command.PersistentFlags().BoolP("quit", "q", false, "quit add all, just push the committed code \n\tgit push")
 	Command.PersistentFlags().BoolP("force", "F", false, "-f: push --force")
@@ -48,6 +49,7 @@ func init() {
 	Command.PersistentFlags().StringP("tag", "t", "", "-t $tag \n\tgit tag -a $tag -m $tag;git push $origin --tags $tag:$tag")
 	Command.PersistentFlags().BoolP("ignore_dlt_tag", "d", false, "-d: delete the tag after 50 seconds \n\tgit tag -d $tag;git push $origin --tags :$tag")
 
+	viper.BindPFlag("squash", Command.PersistentFlags().Lookup("squash"))
 	viper.BindPFlag("add", Command.PersistentFlags().Lookup("add"))
 	viper.BindPFlag("quit", Command.PersistentFlags().Lookup("quit"))
 	viper.BindPFlag("force", Command.PersistentFlags().Lookup("force"))
@@ -116,6 +118,11 @@ func (r *Repo) Init() {
 
 func (r *Repo) ExcuteGit() error {
 	r.Commit()
+	if squash := viper.GetInt("squash"); squash >= 2 {
+		bs, err := r.git.Reset(fmt.Sprintf("git rebase -i HEAD~%d", squash)).Do()
+		fmt.Printf("%s", bs)
+		return err
+	}
 	r.Push()
 	return nil
 }
