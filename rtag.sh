@@ -8,7 +8,7 @@ tell application "System Events"
 	tell process "Safari"
         set frontmost to true
 	end tell
-    tell process "iTerm2"
+    tell process "iTerm"
         set frontmost to false
 	end tell
 end tell	
