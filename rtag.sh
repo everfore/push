@@ -5,7 +5,7 @@ git commit -m "auto"
 echo "======="
 osascript <<EOF
 tell application "System Events"
-    tell process "iTerm"
+    tell process "iTerm2"
         set frontmost to true
 	end tell
 end tell	
