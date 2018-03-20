@@ -128,7 +128,7 @@ tell application "System Events"
     tell process "iTerm2"
         # set frontmost to true
         keystroke "git rebase -i HEAD~%d"
-        keystroke return
+        # keystroke return
 	end tell
 end tell
 EOF`, squash)).Exec(true).Do()
