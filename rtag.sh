@@ -10,10 +10,11 @@ tell application "System Events"
 	end tell
 	tell process "Chrome"
         set frontmost to true
+        keystroke "t" using {command down}
 	end tell
-    tell process "iTerm2"
-        set frontmost to true
-	end tell
+ #    tell process "iTerm2"
+ #        set frontmost to true
+	# end tell
 end tell	
 EOF
 # osascript xxx
