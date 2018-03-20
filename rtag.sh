@@ -9,7 +9,7 @@ tell application "System Events"
         set frontmost to true
 	end tell
     tell process "iTerm"
-        set frontmost to false
+        set frontmost to true
 	end tell
 end tell	
 EOF
