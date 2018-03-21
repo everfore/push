@@ -192,8 +192,6 @@ func (r *Repo) Push() {
 
 	if pushtag, cmd := r.tag(); pushtag {
 		r.git.Reset(cmd).Execute()
-	} else {
-		fmt.Println(pushtag, cmd)
 	}
 }
 
