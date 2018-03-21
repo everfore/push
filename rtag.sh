@@ -18,21 +18,21 @@ osascript <<EOF
 #   	end tell
 # # end tell
 
-tell application "iTerm2"
-    activate
-    set t to (make new terminal)
-    tell t
-        tell (make new session at the end of sessions)
-            write text "pwd && ls"
-        end tell
-    end tell
-end tell
-
 # tell application "iTerm2"
-# 	tell current window
-# 		tell current session
-# 			write text "pwd && ls"
-# 		end tell
-# 	end tell
+#     activate
+#     set t to (make new terminal)
+#     tell t
+#         tell (make new session at the end of sessions)
+#             write text "pwd && ls"
+#         end tell
+#     end tell
 # end tell
+
+tell application "iTerm2"
+	tell current window
+		tell current session
+			write text "ezhome nadesico"
+		end tell
+	end tell
+end tell
 EOF
