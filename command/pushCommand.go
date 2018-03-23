@@ -3,14 +3,14 @@ package command
 import (
 	"fmt"
 	"strings"
-	"time"
+	// "time"
 
 	"github.com/everfore/exc"
 	cr "github.com/fatih/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/toukii/goutils"
-	"github.com/toukii/icat"
+	// "github.com/toukii/icat"
 )
 
 var Command = &cobra.Command{
@@ -24,7 +24,7 @@ var Command = &cobra.Command{
 		} else {
 			viper.Set("commit", "the+same+as+the+last")
 		}
-		Excute()
+		Excute(args)
 	},
 }
 
@@ -62,11 +62,11 @@ func init() {
 	viper.BindPFlag("ignore_dlt_tag", Command.PersistentFlags().Lookup("ignore_dlt_tag"))
 }
 
-func Excute() error {
+func Excute(args []string) error {
 	// exc.NewCMD("e icat /Users/toukii/toukii/images/github.svg").Exec(true)
-	icat.GitHubSVGThree(time.Now().Unix())
+	// icat.GitHubSVGThree(time.Now().Unix())
 	var repo Repo
-	repo.Init()
+	repo.Init(args)
 
 	return repo.ExcuteGit()
 }
@@ -82,10 +82,22 @@ func LocalBranch() string {
 	return cb
 }
 
-func (r *Repo) Init() {
+func (r *Repo) Init(args []string) {
 	r.git = exc.NewCMD("").Debug(true)
 
-	r.Commition = viper.GetString("commit")
+	pureCommit := true
+	for _, arg := range args {
+		if arg[0] == "-"[0] {
+			pureCommit = false
+			break
+		}
+	}
+	if pureCommit {
+		r.Commition = strings.Join(args, `+`)
+	} else {
+		r.Commition = viper.GetString("commit")
+	}
+
 	branch := LocalBranch()
 
 	vb := viper.GetString("branch")
@@ -121,9 +133,8 @@ func (r *Repo) ExcuteGit() error {
 	if squash := viper.GetInt("squash"); squash >= 2 {
 
 		bs, err := exc.Bash(fmt.Sprintf(`osascript <<EOF
-tell application "System Events"
-  #  tell process "iTerm2"
 tell application "iTerm2"  
+tell application "System Events"
         # set frontmost to true
         keystroke "git rebase -i HEAD~%d"
         keystroke return
@@ -181,7 +192,7 @@ func (r *Repo) Commit() {
 }
 
 func (r *Repo) commit() string {
-	return fmt.Sprintf(`git commit -m %s`, r.Commition)
+	return fmt.Sprintf(`git commit -m "%s"`, r.Commition)
 }
 
 func (r *Repo) Push() {
