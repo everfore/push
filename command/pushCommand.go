@@ -192,7 +192,7 @@ func (r *Repo) Commit() {
 }
 
 func (r *Repo) commit() string {
-	return fmt.Sprintf(`git commit -m "%s"`, r.Commition)
+	return fmt.Sprintf(`git commit -m %s`, r.Commition)
 }
 
 func (r *Repo) Push() {
